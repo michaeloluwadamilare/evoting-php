@@ -100,8 +100,8 @@ th{
                       <?php
 
                         $sql = "SELECT * FROM voters_status";
-                        $result = mysql_query($sql) or die(mysql_error());
-                        while($row = mysql_fetch_array($result)){
+                        $result = mysqli_query($conn,$sql) or die(mysqli_error());
+                        while($row = mysqli_fetch_array($result)){
                               
                           $id = $row['id'];
                           $voters_id = $row['voters_id'];
@@ -120,7 +120,8 @@ th{
                         <center><button class="btn btn-danger" name="status">Delete voter's status</button></center>
                         <?php 
                         if (isset($_POST['status'])) {
-                           $sql = mysql_query("DELETE FROM voters_status");
+                           $sql = "DELETE FROM voters_status";
+                           $query=mysqli_query();
                            echo '<div class="alert alert-success">ALL VOTERS STATUS FOR THE ELECTION HAS BEEN DELETED SUCCESSFULLY</div>';
                         }
                         ?>

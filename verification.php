@@ -95,10 +95,10 @@
             					extract($_POST);
 
             					$sql = "SELECT * FROM voters_natid WHERE natId = '$natid'";
-            					$query = mysql_query($sql) or die(mysql_error());
-            					if (mysql_num_rows($query) == 1) {
+            					$query = mysqli_query($conn,$sql) or die(mysqli_error());
+            					if (mysqli_num_rows($query) == 1) {
             						
-            						$result = mysql_fetch_array($query)or die(mysql_error());
+            						$result = mysqli_fetch_array($query)or die(mysqli_error());
             						echo '<div class="alert alert-success">
             								Congratulation! Your National ID has been verified successfully, click the Next Button to proceed<br />
             								<a href="register.php?natid='.$result['natId'].'&id='.$result['id'].'"><button class="btn btn-success btn-lg">Next</button></a>

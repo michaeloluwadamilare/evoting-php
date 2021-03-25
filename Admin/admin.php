@@ -71,9 +71,9 @@ th{
                             <li class="panel">
                                 <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle collapsed" data-target="#form-nav">Add/Delete Menu </a>
                                 <ul class="collapse" id="form-nav">
-                                    <li class=""><a href="Candidate.php"><i class="icon-angle-right"></i>Candidate</a></li>
-                                    <li class=""><a href="position.php"><i class="icon-angle-right"></i>Postion</a></li>
-                                    <li class=""><a href="party.php"><i class="icon-angle-right"></i>Party</a></li>
+                                    <li class=""><a href="Candidate.php">Candidate</a></li>
+                                    <li class=""><a href="position.php">Postion</a></li>
+                                    <li class=""><a href="party.php">Party</a></li>
                                 </ul>
                             </li>
                             <li class="panel">

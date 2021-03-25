@@ -74,9 +74,9 @@
 								$password = $_POST['password'];
 
 								$sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
-								$query = mysql_query($sql) or die(mysql_error());
-								$user = mysql_fetch_array($query);
-								if (mysql_num_rows($query)==1) {
+								$query = mysqli_query($conn,$sql) or die(mysqli_error());
+								$user = mysqli_fetch_array($query);
+								if (mysqli_num_rows($query)==1) {
 
 									$_SESSION['username'] = $user['username'];
 									$_SESSION['admin_id'] = $user['admin_id'];

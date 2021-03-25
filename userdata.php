@@ -74,10 +74,11 @@ th{
 						        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">E-Voting</a>
 									<ul class="dropdown-menu"> 
 								      <li>
-								    	<?php  
-			                    		$query = mysql_query("SELECT * FROM position") or die(mysql_error());
+								    	<?php
+								    	$sql = "SELECT * FROM position";
+			                    		$query = mysqli_query($conn, $sql) or die(mysqli_error());
 			                    		if ($query) {
-			                    			while ($result = mysql_fetch_array($query)) {
+			                    			while ($result = mysqli_fetch_array($query)) {
 			                    				echo '<li><a href="vote.php?position_id=' .$result['position_id'].'">'.$result['position_name'].'</a>';
 			                    			}
 			                    		}
@@ -106,9 +107,10 @@ th{
 			                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle collapsed" data-target="#form-nav">E-Voting </a>
 			                    <ul class="collapse" id="form-nav">
 			                    	<?php  
-			                    		$query = mysql_query("SELECT * FROM position") or die(mysql_error());
+			                    		$sql = "SELECT * FROM position";
+			                    		$query = mysqli_query($conn, $sql) or die(mysqli_error());
 			                    		if ($query) {
-			                    			while ($result = mysql_fetch_array($query)) {
+			                    			while ($result = mysqli_fetch_array($query)) {
 
 			                    				echo '<li><a href="vote.php?position_id='.$result['position_id'].'">'.$result['position_name'].'</a>';
 			                    			}

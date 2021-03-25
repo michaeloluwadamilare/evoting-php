@@ -99,8 +99,8 @@ th{
                       <?php
                         extract($_GET);
                         $sql = "SELECT * FROM candidate WHERE position='$position_id'";
-                        $result = mysql_query($sql) or die(mysql_error());
-                        while($row = mysql_fetch_array($result)){
+                        $result = mysqli_query($conn,$sql) or die(mysqli_error());
+                        while($row = mysqli_fetch_array($result)){
                               
                           $candidate_name = $row['name'];
                           $vote = $row['vote'];

@@ -94,8 +94,8 @@ th{
                         <select name="position" class="form-control">
                             <?php
                             $sql = "SELECT * FROM position ";
-                            $query = mysql_query($sql);
-                            while($result = mysql_fetch_array($query)){
+                            $query = mysqli_query($conn,$sql);
+                            while($result = mysqli_fetch_array($query)){
                                 echo '<option value = "'.$result['position_id'].'">' .$result['position_name']. '</option>';
                             }
 

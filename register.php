@@ -165,8 +165,8 @@
 		            if(move_uploaded_file($_FILES['passport']['tmp_name'], 'img/'.$passport)) {
 
 		            $sq2 = "SELECT * FROM voters_data WHERE natid = '$natid' ";
-		            $query2 = mysql_query($sq2) or die(mysql_error());
-		            if (mysql_num_rows($query2)==1) {
+		            $query2 = mysqli_query($conn,$sq2) or die(mysqli_error());
+		            if (mysqli_num_rows($query2)==1) {
 		                echo '<div class="alert alert-danger">
 		            								The National ID you entered belongs to or have been used by another voter, click the Back Button to verify your National ID<br />
 		            								<a href="verification.php"><button class="btn btn-danger btn-lg">Back</button></a>
@@ -175,7 +175,7 @@
 		            else{
 		                $sql = "INSERT INTO voters_data(surname,other_name,dob,email,state,lga,gender,phoneNo,address,passport,voterId,ward,town,natid)
 		                                    VALUES('$sname','$Oname','$dob','$email','$state','$lga','$gender','$phoneNo','$address','$passport','$voterId','$ward','$town','$natid')";
-		                        $query = mysql_query($sql) or die(mysql_error());
+		                        $query = mysqli_query($conn,$sql) or die(mysqli_error());
 		 
 		                        if($query){
  									echo '<div class="alert alert-success">

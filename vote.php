@@ -10,19 +10,19 @@
             	if (isset($_POST['submit'])) {
             		$voter = $_POST['voter'];
             		$sql = "SELECT * FROM candidate WHERE candidate_id = '$voter'";
-            		$query = mysql_query($sql) or die(mysql_error());
-            		$result = mysql_fetch_array($query);
+            		$query = mysqli_query($conn,$sql) or die(mysqli_error());
+            		$result = mysqli_fetch_array($query);
             		extract($result);
             			$voting = $result['vote'];
             			$voting++;
             		
             		$sq2 ="UPDATE candidate SET vote='$voting' WHERE candidate_id='$voter'";
-            		$query2 = mysql_query($sq2) or die(mysql_error());
+            		$query2 = mysqli_query($conn,$sq2) or die(mysqli_error());
 
             		$status = "voted";
             		$sq3 ="INSERT INTO voters_status(voters_id,position_id,status)
             				VALUES('$voterId','$position_id','$status')";
-            		$query3 = mysql_query($sq3) or die(mysql_error());
+            		$query3 = mysqli_query($conn,$sq3) or die(mysqli_error());
             		
             	}
             	
@@ -98,10 +98,11 @@ th{
 						         <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">E-Voting</a>
 									<ul class="dropdown-menu"> 
 								      <li>
-								    	<?php  
-			                    		$query = mysql_query("SELECT * FROM position") or die(mysql_error());
+								    	<?php
+								    	$sql = "SELECT * FROM position";
+			                    		$query = mysqli_query($conn,$sql) or die(mysqli_error());
 			                    		if ($query) {
-			                    			while ($result = mysql_fetch_array($query)) {
+			                    			while ($result = mysqli_fetch_array($query)) {
 			                    				echo '<li><a href="vote.php?position_id=' .$result['position_id'].'">'.$result['position_name'].'</a>';
 			                    			}
 			                    		}
@@ -130,10 +131,11 @@ th{
 			                <li class="panel ">
 			                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle collapsed" data-target="#form-nav">E-Voting </a>
 			                    <ul class="collapse" id="form-nav">
-			                       <?php  
-			                    		$query = mysql_query("SELECT * FROM position") or die(mysql_error());
+			                       <?php
+			                       		$sql ="SELECT * FROM position";  
+			                    		$query = mysqli_query($conn,$sql) or die(mysqli_error());
 			                    		if ($query) {
-			                    			while ($result = mysql_fetch_array($query)) {
+			                    			while ($result = mysqli_fetch_array($query)) {
 			                    				echo '<li><a href="vote.php?position_id=' .$result['position_id'].'">'.$result['position_name'].'</a>';
 			                    			}
 			                    		}
@@ -153,8 +155,7 @@ th{
             	<div class="col-md-6" style="margin-top: 30px;">
             		<div class="row bg-primary">
             			<?php 
-            			
-            			$query = mysql_query('SELECT 
+            			$sql = 'SELECT 
 			                    								candidate.candidate_id,
 			                    								candidate.name,
 			                    								candidate.passport,
@@ -164,13 +165,14 @@ th{
 			                    								position.position_name
 			                    								FROM
 			                    								candidate
-			                    								LEFT JOIN
+			                    								JOIN
 			                    								position
 			                    								ON
 			                    								candidate.position = position.position_id
 			                    								WHERE
 			                    								candidate.position = '.$position_id.'
-			                    								') or die(mysql_error());
+			                    								';
+            			$query = mysqli_query($conn,$sql) or die(mysqli_error());
 
 
             			?>
@@ -178,9 +180,9 @@ th{
             				<!-- To output the position name from the database -->
             				<?php 
             					$position_sql = "SELECT * FROM position WHERE position_id ='$position_id'";
-            					$position_query= mysql_query($position_sql) or die(mysql_error());
-            					if (mysql_num_rows($position_query)==1) {
-            					$position_result =(mysql_fetch_array($position_query));
+            					$position_query= mysqli_query($conn,$position_sql) or die(mysqli_error());
+            					if (mysqli_num_rows($position_query)==1) {
+            					$position_result =(mysqli_fetch_array($position_query));
             					echo $position_result['position_name'];
             					}
             				?>
@@ -202,7 +204,7 @@ th{
 		                          <tr>
 		                           <?php
 		                             if ($query) {
-		                              while ($result = mysql_fetch_array($query)) {
+		                              while ($result = mysqli_fetch_array($query)) {
 		                               echo '<tr><td><img class="img-rounded img-responsive" src="candidate/'.$result['passport'].'"width="150" height="150"/>'.$result['name'].'</td><td><br><br><input style="width:100%; height:40px;" type="radio" name="voter" value="'.$result[0].'" required></td></tr><br>';
 		                              }
 		                         	 }
@@ -218,8 +220,8 @@ th{
             		
             		$status = "voted";
             		$sql1 = "SELECT * FROM voters_status WHERE position_id ='$position_id' AND voters_id ='$voterId' AND status ='$status'";
-            		$query1 =  mysql_query($sql1) or die(mysql_error());
-            		if (mysql_num_rows($query1)==1) {
+            		$query1 =  mysqli_query($conn,$sql1) or die(mysqli_error());
+            		if (mysqli_num_rows($query1)==1) {
             			echo '<div class="alert alert-success">You have voted for this position</div>';
             		}
             		else{

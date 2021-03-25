@@ -101,8 +101,9 @@ th{
 
 					    $position =$_POST['position']; 
 					    
-					 	 $sql1 = mysql_query("SELECT * FROM position WHERE position_name = '$position'");
-					                             if (mysql_num_rows($sql1)==1) {
+					 	 $sql1 = "SELECT * FROM position WHERE position_name = '$position'";
+                         $query=mysqli_query($conn,$sql);
+					                             if (mysqli_num_rows($query)==1) {
 					                                 echo "This position already exist";
 					                             }
 
@@ -111,7 +112,7 @@ th{
 
 								    			 $sql = "INSERT INTO position(position_name)
 								                            VALUES('$position')";
-								                $query = mysql_query($sql) or die(mysql_error());
+								                $query = mysqli_query($conn,$sql) or die(mysqli_error());
 								                 echo "Position has been added sucessfully";
 					                			}
 						}

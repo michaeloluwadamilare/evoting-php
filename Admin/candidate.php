@@ -108,8 +108,8 @@
 		                    <select name="position" class="form-control">
 		                    	<?php
 		                    	$sql = "SELECT * FROM position ";
-		                    	$query = mysql_query($sql);
-		                    	while($result = mysql_fetch_array($query)){
+		                    	$query = mysqli_query($conn,$sql);
+		                    	while($result = mysqli_fetch_array($query)){
 		                    		echo '<option value = "'.$result['position_id'].'">' .$result['position_name']. '</option>';
 		                    	}
 
@@ -122,8 +122,8 @@
 		                    <select name="party" class="form-control">
 		                    	<?php
 		                    	$sql = "SELECT * FROM party ";
-		                    	$query = mysql_query($sql);
-		                    	while($result = mysql_fetch_array($query)){
+		                    	$query = mysqli_query($conn,$sql);
+		                    	while($result = mysqli_fetch_array($query)){
 		                    		echo '<option value = "'.$result['party_id'].'">' .$result['name']. '</option>';
 		                    	}
 
@@ -142,14 +142,15 @@
 					    $passport = $_FILES['passport']['name'];
 
 					    if(move_uploaded_file($_FILES['passport']['tmp_name'], '../candidate/'.$passport)) {
-					    	$sql1 =mysql_query("SELECT * FROM candidate WHERE name ='$name' AND position ='$position' AND party = '$party' ");
-					    	if (mysql_num_rows($sql1)==1) {
+					    	$sql1 = "SELECT * FROM candidate WHERE name ='$name' AND position ='$position' AND party = '$party' ";
+					    	$query = mysqli_query($conn,$sql);
+					    	if (mysqli_num_rows($query)==1) {
 					    		echo "Candidate already exist";
 					    	}
 					    	else{
 					     			$sql = "INSERT INTO candidate(name,party,passport,position)
 					                            VALUES('$name','$party','$passport','$position')";
-					                $query = mysql_query($sql) or die(mysql_error());
+					                $query = mysqli_query($conn,$sql) or die(mysqli_error());
 					                 echo '<div>Candidate has been added sucessfully</div>';
 					                 }
 					    }
@@ -174,8 +175,8 @@
                         <tr>
                     <?php
                     $sql = "SELECT * FROM candidate";
-                    $query =mysql_query($sql) or die(mysql_error());
-                    while ($result = mysql_fetch_array($query)) {
+                    $query =mysqli_query($conn,$sql) or die(mysqli_error());
+                    while ($result = mysqli_fetch_array($query)) {
                        echo '<tr><td> '.$result[0].'</td><td>'.$result[1].'</td><td><button class="btn btn-danger" name="delete" value="'.$result[0].'">Delete</button></td></tr><br>';
 
                       }
@@ -189,7 +190,9 @@
                  <?php  
                  extract($_POST);
                  if (isset($_POST['delete'])) {
-                     $sql1=mysql_query("DELETE FROM candidate WHERE candidate_id = $delete");
+
+                     $sql1="DELETE FROM candidate WHERE candidate_id = $delete";
+                     $query=mysqli_query($conn,$sql1);
                     echo '<div class="alert alert-success">Candidate has been delete successfully </div>';
                  }
 

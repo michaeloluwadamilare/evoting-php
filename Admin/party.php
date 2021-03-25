@@ -102,20 +102,22 @@ th{
 
                             $party = $_POST['party'];
 
-                            $sql1 = mysql_query("SELECT * FROM party WHERE name = '$party'");
-                             if (mysql_num_rows($sql1)==1) {
+                            $sql1 = "SELECT * FROM party WHERE name = '$party'";
+                            $query1 =mysqli_query($conn,$sql1);
+                             if (mysqli_num_rows($query1)==1) {
                                  echo '<div class="alert alert-danger">This party name already exist</div>';
                              }
                              else{
                              $sql2 = "INSERT INTO party(name)
                                                     VALUES('$party')";
-                                        $query = mysql_query($sql2) or die(mysql_error());
+                                        $query = mysqli_query($conn,$sql2) or die(mysqli_error());
                                            echo '<div class="alert alert-success">Party has been added sucessfully</div>';
                                 }
                         }
 
                     if (isset($_POST['delete'])) {
-                         $sql1=mysql_query("DELETE FROM party WHERE party_id = $delete");
+                         $sql1= "DELETE FROM party WHERE party_id = $delete";
+                         $query=mysqli_query($conn,$sql1);
                         echo '<div class="alert alert-success">party has been delete successfully </div>';
                      }
                     
@@ -138,8 +140,8 @@ th{
                         <tr>
                     <?php
                     $sql = "SELECT * FROM party";
-                    $query =mysql_query($sql) or die(mysql_error());
-                    while ($result = mysql_fetch_array($query)) {
+                    $query =mysqli_query($conn,$sql) or die(mysqli_error());
+                    while ($result = mysqli_fetch_array($query)) {
                        echo '<tr><td> '.$result[0].'</td><td>'.$result[1].'</td><td><button class="btn btn-danger" name="delete" value="'.$result[0].'">Delete</button></td></tr><br>';
 
                       }

@@ -2,14 +2,15 @@
 session_start();
 require_once("connect.php");
 
-$voterId = $_POST['voterId'];
-$password = $_POST['password'];
+// $voterId = $_POST['voterId'];
+// $password = $_POST['password'];
+extract($_POST);
 
 if (isset($_POST['btnsignin'])) {
 	$sql = "SELECT * FROM voters_data WHERE voterId = '$voterId' AND surname = '$password'";
-	$query = mysql_query($sql) or die(mysql_error());
-	$user = mysql_fetch_array($query);
-	if (mysql_num_rows($query)==1) {
+	$query = mysqli_query($conn,$sql) or die(mysqli_error($conn));
+	$user = mysqli_fetch_array($query);
+	if (mysqli_num_rows($query)==1) {
 		$_SESSION['id'] = $user['id'];
 		$_SESSION['passport'] = $user['passport'];
 		$_SESSION['firstname'] = $user['other_name'];
@@ -24,7 +25,7 @@ if (isset($_POST['btnsignin'])) {
 		$_SESSION['phoneNo'] = $user['phoneNo'];
 		$_SESSION['address'] = $user['address'];
 		$_SESSION['dob'] = $user['dob'];
-		header("Location: userdata.php?id=".sha1($user['voterId'])."");
+		header("Location: userdata.php?id=".crypt($user['voterId'])."");
 	}
 	else{
 		header("Location: index.php?id=error");
