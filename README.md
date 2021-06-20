@@ -1,2 +1,2 @@
 # evoting-php
- this ia a web application
+ this is a web electonic voting application
